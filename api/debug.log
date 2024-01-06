@@ -1,7 +1,7 @@
 Array
 (
-    [uid] => user2
-    [pwd] => a
-    [pwdRepeat] => a
-    [email] => a@a.de
+    [uid] => fdas
+    [pwd] => 1
+    [pwdRepeat] => 1
+    [email] => a@b.de
 )

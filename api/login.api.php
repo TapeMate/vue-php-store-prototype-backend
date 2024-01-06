@@ -13,15 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $signupData = json_decode(file_get_contents('php://input'), true);
+    $inputData = json_decode(file_get_contents('php://input'), true);
 
     // see Video from Dani Krossing regarding error handling and logging to possibly make some changes
-    // Debug: Output $signupData to a log file to see user data
-    file_put_contents('debug.log', print_r($signupData, true));
+    // Debug: Output $inputData to a log file to see user data
+    file_put_contents('debug.log', print_r($inputData, true));
 
-    // Now you can use $signupData just like you would use $_POST
-    $uid = $signupData['uid'];
-    $pwd = $signupData['pwd'];
+    // Now you can use $inputData just like you would use $_POST
+    $uid = $inputData['uid'];
+    $pwd = $inputData['pwd'];
+    $pwdRepeat = $inputData['pwdRepeat'];
+    $email = $inputData['email'];
 
     // Instantiate SignupContr class and include classes
     include_once "../classes/dbh.class.php";
