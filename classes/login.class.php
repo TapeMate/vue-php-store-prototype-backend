@@ -27,7 +27,9 @@ class Login extends DbH
             $logFile = "login.log";
             file_put_contents($logFile, "User data: " . print_r($user, true) . "\n", FILE_APPEND);
 
-            return $user;
+            // return $user;
+            echo json_encode($user);
+            exit();
         }
     }
 }
