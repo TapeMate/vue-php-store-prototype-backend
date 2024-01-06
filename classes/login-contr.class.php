@@ -15,8 +15,22 @@ class LoginContr extends Login
 
     public function loginUser()
     {
-        // error handling here
+        if ($this->emptyInput() == false) {
+            echo json_encode(["error" => "input empty!"]);
+            exit();
+        }
 
-        parent::getUser($this->uid, $this->pwd);
+        return parent::getUser($this->uid, $this->pwd);
+    }
+
+    private function emptyInput()
+    {
+        $result = null;
+        if (empty($this->uid) || empty($this->pwd)) {
+            $result = false;
+        } else {
+            $result = true;
+        }
+        return $result;
     }
 }

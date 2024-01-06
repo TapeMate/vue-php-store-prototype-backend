@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // see Video from Dani Krossing regarding error handling and logging to possibly make some changes
     // Debug: Output $signupData to a log file to see user data
-    file_put_contents('debug.log', print_r($signupData, true));
+    // file_put_contents('debug.log', print_r($signupData, true));
 
     // Now you can use $signupData just like you would use $_POST
     $uid = $signupData['uid'];
