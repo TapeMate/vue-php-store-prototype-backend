@@ -1,7 +1,7 @@
 Array
 (
-    [uid] => afsd
-    [pwd] => fasd
-    [pwdRepeat] => fasd
-    [email] => afsd
+    [uid] => user2
+    [pwd] => a
+    [pwdRepeat] => a
+    [email] => a@a.de
 )
