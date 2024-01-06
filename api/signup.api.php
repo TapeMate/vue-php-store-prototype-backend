@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', '0'); // Turn off error displaying
-error_reporting(E_ALL); // Report all errors
-
 // Handle CORS
 header('Access-Control-Allow-Origin: *'); // Allows all origins. For production, replace * with your actual domain.
 header('Access-Control-Allow-Methods: POST'); // Adjust methods as needed
@@ -17,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $signupData = json_decode(file_get_contents('php://input'), true);
 
-    // see Video from Dani Krossing regarding error handling and logging to possibly make some changes
     // Debug: Output $signupData to a log file to see user data
     // file_put_contents('debug.log', print_r($signupData, true));
 

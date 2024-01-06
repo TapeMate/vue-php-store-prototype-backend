@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', '0'); // Turn off error displaying
-error_reporting(E_ALL); // Report all errors
-
 class Signup extends Dbh
 {
     protected function setUser($uid, $pwd, $email)
