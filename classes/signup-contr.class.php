@@ -22,15 +22,13 @@ class SignupContr extends Signup
             // header("location: ../index.php?error=emptyinput");
             // exit();
 
-            // instead of redirecting and exit, return error message.
-            // return ["error" => "empty Input, pls fill out all fields!"];
-
-
+            // echo error message to frontend
+            // exit rest of the script
             echo json_encode(["error" => "empty Input, please fill out all fields!"]);
             exit(); // Terminate script execution
         }
         parent::setUser($this->uid, $this->pwd, $this->email);
-        return ["message" => "All Inputs set."];
+        return ["message" => "Signup successful!"];
     }
 
     private function emptyInput()
