@@ -26,7 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $inputData['email'];
 
     // Instantiate SignupContr class and include classes
+    include_once "../classes/dbh.class.php";
+    include_once "../classes/signup.class.php";
+    include_once "../classes/signup-contr.class.php";
+    $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
 
+    $signup->signupUser();
 
     // encode back to JSON for JS response
     echo json_encode(["message" => "Signup successful"]);
