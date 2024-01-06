@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0'); // Turn off error displaying
+error_reporting(E_ALL); // Report all errors
 
 // Handle CORS
 header('Access-Control-Allow-Origin: *'); // Allows all origins. For production, replace * with your actual domain.

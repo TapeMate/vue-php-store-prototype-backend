@@ -1,0 +1,12 @@
+User data: Array
+(
+    [0] => Array
+        (
+            [users_id] => 19
+            [users_uid] => test
+            [users_pwd] => $2y$10$pgKEHoaBG7UPGKlI1Kvz9OTNtPuZD3vS3WNaZ5yC165BzNCJoltUW
+            [users_email] => 1@1.de
+        )
+
+)
+

@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0'); // Turn off error displaying
+error_reporting(E_ALL); // Report all errors
 
 class SignupContr extends Signup
 {
