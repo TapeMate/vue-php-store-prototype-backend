@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include_once "../classes/signup-contr.class.php";
     $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
 
+    // call method from Controller
     $signup->signupUser();
 
     // encode back to JSON for JS response
