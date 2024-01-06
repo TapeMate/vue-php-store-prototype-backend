@@ -18,82 +18,25 @@ class SignupContr extends Signup
     public function signupUser()
     {
         if ($this->emptyInput() == false) {
-            header("location: ../index.php?error=emptyinput");
-            exit();
-        }
+            // redirection must be done in a different way!!!
+            // header("location: ../index.php?error=emptyinput");
+            // exit();
 
-        if ($this->invalidUid() == false) {
-            header("location: ../index.php?error=username");
-            exit();
-        }
+            // instead of redirecting and exit, return error message.
+            // return ["error" => "empty Input, pls fill out all fields!"];
 
-        if ($this->invalidEmail() == false) {
-            header("location: ../index.php?error=email");
-            exit();
-        }
 
-        if ($this->pwdMatch() == false) {
-            header("location: ../index.php?error=passwordmatch");
-            exit();
+            echo json_encode(["error" => "empty Input, please fill out all fields!"]);
+            exit(); // Terminate script execution
         }
-
-        if ($this->uidTaken() == false) {
-            header("location: ../index.php?error=useroremailtaken");
-            exit();
-        }
-
         parent::setUser($this->uid, $this->pwd, $this->email);
+        return ["message" => "All Inputs set."];
     }
 
     private function emptyInput()
     {
         $result = null;
         if (empty($this->uid) || empty($this->pwd) || empty($this->pwdRepeat) || empty($this->email)) {
-            $result = false;
-        } else {
-            $result = true;
-        }
-        return $result;
-    }
-
-    private function invalidUid()
-    {
-        $result = null;
-        if (!preg_match("/^[a-zA-Z0-9]*$/", $this->uid)) {
-            $result = false;
-        } else {
-            $result = true;
-        }
-        return $result;
-    }
-
-    // build in PHP function to check if email is valid
-    private function invalidEmail()
-    {
-        $result = null;
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $result = false;
-        } else {
-            $result = true;
-        }
-        return $result;
-    }
-
-    private function pwdMatch()
-    {
-        $result = null;
-        if ($this->pwd !== $this->pwdRepeat) {
-            $result = false;
-        } else {
-            $result = true;
-        }
-        return $result;
-    }
-
-    private function uidTaken()
-    {
-        $result = null;
-        if (!parent::checkUser($this->uid, $this->email)) {
             $result = false;
         } else {
             $result = true;

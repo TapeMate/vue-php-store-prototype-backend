@@ -1,7 +1,7 @@
 Array
 (
-    [uid] => username
-    [pwd] => password
-    [pwdRepeat] => password
-    [email] => some@one.de
+    [uid] => 
+    [pwd] => fdsafdsf
+    [pwdRepeat] => fasdfsa
+    [email] => fasdfas
 )

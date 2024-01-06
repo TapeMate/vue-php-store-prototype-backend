@@ -32,10 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
 
     // call method from Controller
-    $signup->signupUser();
+    // store in $response variable vor JS encoding later
+    $response = $signup->signupUser();
 
     // encode back to JSON for JS response
-    echo json_encode(["message" => "Signup successful"]);
+    echo json_encode($response);
 } else {
     // Handle error: Not a POST request
     http_response_code(405); // Method Not Allowed
