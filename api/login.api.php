@@ -13,27 +13,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $inputData = json_decode(file_get_contents('php://input'), true);
+    $loginData = json_decode(file_get_contents('php://input'), true);
 
     // see Video from Dani Krossing regarding error handling and logging to possibly make some changes
-    // Debug: Output $inputData to a log file to see user data
-    file_put_contents('debug.log', print_r($inputData, true));
+    // Debug: Output $loginData to a log file to see user data
+    file_put_contents('debug.log', print_r($loginData, true));
 
-    // Now you can use $inputData just like you would use $_POST
-    $uid = $inputData['uid'];
-    $pwd = $inputData['pwd'];
-    $pwdRepeat = $inputData['pwdRepeat'];
-    $email = $inputData['email'];
+    // Now you can use $loginData just like you would use $_POST
+    $uid = $loginData['uid'];
+    $pwd = $loginData['pwd'];
 
     // Instantiate SignupContr class and include classes
     include_once "../classes/dbh.class.php";
-    include_once "../classes/signup.class.php";
-    include_once "../classes/signup-contr.class.php";
-    $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
+    include_once "../classes/login.class.php";
+    include_once "../classes/login-contr.class.php";
+    $login = new LoginContr($uid, $pwd);
 
     // call method from Controller
     // store in $response variable vor JS encoding later
-    $response = $signup->signupUser();
+    $response = $login->loginUser();
 
     // encode back to JSON for JS response
     echo json_encode($response);

@@ -22,6 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Now you can use $signupData just like you would use $_POST
     $uid = $signupData['uid'];
     $pwd = $signupData['pwd'];
+    $pwdRepeat = $signupData['pwdRepeat'];
+    $email = $signupData['email'];
 
     // Instantiate SignupContr class and include classes
     include_once "../classes/dbh.class.php";

@@ -1,7 +1,5 @@
 Array
 (
     [uid] => fdas
-    [pwd] => 1
-    [pwdRepeat] => 1
-    [email] => a@b.de
+    [pwd] => fasd
 )
