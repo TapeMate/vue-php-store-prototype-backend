@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pwd = $loginData['pwd'];
 
     // Instantiate SignupContr class and include classes
-    include_once "../classes/dbh.class.php";
-    include_once "../classes/login.class.php";
-    include_once "../classes/login-contr.class.php";
-    $login = new LoginContr($uid, $pwd);
+    // include_once "../classes/dbh.class.php";
+    // include_once "../classes/login.class.php";
+    // include_once "../classes/login-contr.class.php";
+    // $login = new LoginContr($uid, $pwd);
 
     // call method from Controller
     // store in $response variable vor JS encoding later
