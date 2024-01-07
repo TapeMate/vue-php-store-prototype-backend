@@ -7,7 +7,6 @@ class ProductContr extends Product
 
     public function getProductsForFrontend()
     {
-        parent::getProductsFromDB();
-        return ["message" => "received products."];
+        return parent::getProductsFromDB();
     }
 }
