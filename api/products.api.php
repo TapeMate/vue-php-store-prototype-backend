@@ -14,3 +14,6 @@ include_once "../classes/dbh.class.php";
 include_once "../classes/products.class.php";
 include_once "../classes/products-contr.class.php";
 $products = new ProductContr();
+
+$result = $products->getProductsForFrontend();
+echo json_encode($result);
