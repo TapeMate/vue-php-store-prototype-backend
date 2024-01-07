@@ -12,7 +12,7 @@ class Signup extends Dbh
         if (!$stmt->execute([$uid, $hashedPwd, $email])) {
             $sql = null;
             $stmt = null;
-            header("location: ../index.php?error=stmtfailed");
+            echo json_encode(["error" => "stmt failed!"]);
             exit();
         }
 
@@ -29,7 +29,7 @@ class Signup extends Dbh
         if (!$stmt->execute([$uid, $email])) {
             $sql = null;
             $stmt = null;
-            header("location: ../index.php?error=stmtfailed");
+            echo json_encode(["error" => "stmt failed!"]);
             exit();
         }
 
