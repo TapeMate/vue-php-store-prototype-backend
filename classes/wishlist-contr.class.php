@@ -16,13 +16,32 @@ class WishListContr extends WishList
         if ($this->wishListExists() == false) {
             $wishListId = parent::createWishList($this->uid);
             parent::addWishListItem($wishListId, $this->productId);
-            return ["success" => true, "message" => "Item added to wishlist"];
+            return ["success" => true, "message" => "Created wishlist & added item"];
         }
 
         $wishListId = parent::getWishListId($this->uid);
-        // file_put_contents('debug.log', print_r($wishListId, true));
         parent::addWishListItem($wishListId, $this->productId);
         return ["success" => true, "message" => "Item added to wishlist"];
+    }
+
+    public function getWishList()
+    {
+        if ($this->wishListExists() == false) {
+            return ["error" => "Wishlist does not exist"];
+        }
+        $wishListId = parent::getWishListId($this->uid);
+
+        // If getWishListId returns an array with 'error', handle it
+        if (isset($wishListId['error'])) {
+            return $wishListId;
+        }
+
+        $productIds = parent::getWishListItems($wishListId);
+        if (isset($productIds['error'])) {
+            return $productIds;
+        }
+
+        return $productIds;
     }
 
     private function wishListExists()
@@ -35,5 +54,4 @@ class WishListContr extends WishList
         }
         return $result;
     }
-
 }

@@ -56,4 +56,19 @@ class WishList extends Dbh
 
         return $result["wishlist_id"];
     }
+
+    protected function getWishListItems($wishListId)
+    {
+        $sql = "SELECT products_product_id FROM wishlist_items WHERE wishlist_id = (?);";
+        $stmt = parent::connect()->prepare($sql);
+        $stmt->execute([$wishListId]);
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$items) {
+            return ["error" => "Wishlist Items not found"];
+        }
+
+        $productIds = array_column($items, "products_product_id");
+        return ["products_product_id" => $productIds];
+    }
 }

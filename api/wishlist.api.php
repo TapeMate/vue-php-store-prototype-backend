@@ -23,9 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include_once "../classes/wishlist-contr.class.php";
     $wishListItem = new WishListContr($uid, $productId);
 
-    $response = $wishListItem->setWishList();
+    $responseSet = $wishListItem->setWishList();
+    $responseGet = $wishListItem->getWishList();
 
-    echo json_encode($response);
+    echo json_encode($responseSet);
+    echo json_encode($responseGet);
 } else {
     // Handle error: Not a POST request
     http_response_code(405); // Method Not Allowed
