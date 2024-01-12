@@ -20,4 +20,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // echo json_encode($wishlistData);
     echo json_encode(["success" => true, "message" => "Item added to wishlist"]);
 }
-

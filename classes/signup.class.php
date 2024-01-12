@@ -3,7 +3,7 @@ class Signup extends Dbh
 {
     protected function setUser($uid, $pwd, $email)
     {
-        $sql = "INSERT INTO users (users_uid, users_pwd, users_email) VALUES (?,?,?);";
+        $sql = "INSERT INTO users (user_uid, user_pwd, user_email) VALUES (?,?,?);";
         $stmt = parent::connect()->prepare($sql);
 
         // hashing the password first before sind it to db
@@ -22,7 +22,7 @@ class Signup extends Dbh
 
     protected function checkUser($uid, $email)
     {
-        $sql = "SELECT users_uid FROM users WHERE users_uid = ? OR users_email = ?;";
+        $sql = "SELECT user_uid FROM users WHERE user_uid = ? OR user_email = ?;";
         $stmt = parent::connect()->prepare($sql);
 
         // check for execution
