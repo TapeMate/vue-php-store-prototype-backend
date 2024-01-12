@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $wishListData = json_decode(file_get_contents('php://input'), true);
-    file_put_contents('debug.log', print_r($wishListData, true));
+    // file_put_contents('debug.log', print_r($wishListData, true));
 
     $uid = $wishListData['userId'];
     $productId = $wishListData['productId'];
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include_once "../classes/wishlist-contr.class.php";
     $wishListItem = new WishListContr($uid, $productId);
 
-    $response = $wishListItem->createWishList();
+    $response = $wishListItem->setWishList();
 
     echo json_encode($response);
 } else {

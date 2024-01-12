@@ -11,10 +11,29 @@ class WishListContr extends WishList
         $this->productId = $productId;
     }
 
-    public function createWishList()
+    public function setWishList()
     {
-        parent::setWishList($this->uid, $this->productId);
+        if ($this->wishListExists() == false) {
+            $wishListId = parent::createWishList($this->uid);
+            parent::addWishListItem($wishListId, $this->productId);
+            return ["success" => true, "message" => "Item added to wishlist"];
+        }
+
+        $wishListId = parent::getWishListId($this->uid);
+        // file_put_contents('debug.log', print_r($wishListId, true));
+        parent::addWishListItem($wishListId, $this->productId);
         return ["success" => true, "message" => "Item added to wishlist"];
+    }
+
+    private function wishListExists()
+    {
+        $result = null;
+        if (!parent::checkWishListExists($this->uid)) {
+            $result = false;
+        } else {
+            $result = true;
+        }
+        return $result;
     }
 
 }
