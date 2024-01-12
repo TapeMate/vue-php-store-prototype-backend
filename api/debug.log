@@ -1,0 +1,10 @@
+Array
+(
+    [product_id] => 3
+    [product_number] => 117003
+    [product_name] => Product C
+    [product_description] => Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit sed.
+    [product_stock_amount] => 0
+    [product_price] => 1195
+    [product_img] => /img/product-c.9df25f2a.png
+)
