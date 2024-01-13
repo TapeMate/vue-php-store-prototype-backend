@@ -3,33 +3,41 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
 
+// Include classes
+include_once "../classes/dbh.class.php";
+include_once "../classes/wishlist.class.php";
+include_once "../classes/wishlist-contr.class.php";
 // Handle preflight request for OPTIONS method from browser
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
-//decode JSON string into a PHP associative array
-header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $wishListData = json_decode(file_get_contents('php://input'), true);
-    // file_put_contents('debug.log', print_r($wishListData, true));
-
     $uid = $wishListData['userId'];
     $productId = $wishListData['productId'];
 
-    include_once "../classes/dbh.class.php";
-    include_once "../classes/wishlist.class.php";
-    include_once "../classes/wishlist-contr.class.php";
     $wishListItem = new WishListContr($uid, $productId);
 
-    $responseSet = $wishListItem->setWishList();
-    $responseGet = $wishListItem->getWishList();
+    $response = $wishListItem->setWishList();
+    echo json_encode($response);
 
-    echo json_encode($responseSet);
-    echo json_encode($responseGet);
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $uid = isset($_GET['userId']) ? $_GET['userId'] : null;
+
+    if ($uid === null) {
+        echo json_encode(["error" => "User ID is required"]);
+        exit();
+    }
+    $wishListItem = new WishListContr($uid, null);
+
+    $response = $wishListItem->getWishList();
+    echo json_encode($response);
+
 } else {
-    // Handle error: Not a POST request
+    // Handle error for unsupported request method
     http_response_code(405); // Method Not Allowed
-    echo json_encode(["error" => "Only POST method is allowed"]);
+    echo json_encode(["error" => "Only POST and GET methods are allowed"]);
 }
