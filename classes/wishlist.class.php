@@ -57,7 +57,7 @@ class WishList extends Dbh
         return $result["wishlist_id"];
     }
 
-    protected function getWishListItems($wishListId)
+    protected function getWishListItemIDs($wishListId)
     {
         $sql = "SELECT products_product_id FROM wishlist_items WHERE wishlist_id = (?);";
         $stmt = parent::connect()->prepare($sql);
@@ -70,5 +70,22 @@ class WishList extends Dbh
 
         $productIds = array_column($items, "products_product_id");
         return ["products_product_id" => $productIds];
+    }
+
+    protected function getWishListItemData($productIds)
+    {
+        // transform into regular array
+        $productIdsArray = $productIds["products_product_id"];
+        // implode array values to string and create placeholders for every entry 
+        $placeholders = implode(',', array_fill(0, count($productIdsArray), '?'));
+        $sql = "SELECT * FROM products WHERE product_id IN ($placeholders);";
+        $stmt = parent::connect()->prepare($sql);
+
+        if (!$stmt->execute($productIdsArray)) {
+            return ["error" => "Database query failed"];
+        }
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return ["wishListData" => $data];
     }
 }

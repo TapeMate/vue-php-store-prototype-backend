@@ -35,12 +35,17 @@ class WishListContr extends WishList
             return ["success" => false, "error" => $wishListId["error"]];
         }
 
-        $productIds = parent::getWishListItems($wishListId);
+        $productIds = parent::getWishListItemIDs($wishListId);
         if (isset($productIds['error'])) {
             return ["success" => false, "error" => $productIds["error"]];
         }
 
-        return ["success" => true, "products_product_id" => $productIds];
+        $productData = parent::getWishListItemData($productIds);
+        if (isset($productData["error"])) {
+            return ["success" => false, "error" => $productData["error"]];
+        }
+
+        return ["success" => true, "wishListData" => $productData["wishListData"]];
     }
 
     private function wishListExists()
