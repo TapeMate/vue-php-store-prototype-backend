@@ -31,25 +31,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(["error" => "User ID is required"]);
         exit();
     }
-    $wishListItem = new WishListContr($uid, null);
+    $wishList = new WishListContr($uid, null);
 
-    $response = $wishListItem->getWishList();
+    $response = $wishList->getWishList();
     echo json_encode($response);
 
 } else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
-    // $data = json_decode(file_get_contents("php://input"), true);
-    // $uid = $data["userId"];
-    // $productId = $data["productId"];
+    $data = json_decode(file_get_contents("php://input"), true);
+    $uid = $data["userId"];
+    $productId = $data["productId"];
 
-    // if ($uid = 30 && $productId == 1) {
-    //     echo json_encode($response);
-    // } else {
-    //     exit();
-    // }
+    $wishListItem = new WishListContr($uid, $productId);
 
-    $response = ["success" => true];
+    $response = $wishListItem->removeWishListItem();
     echo json_encode($response);
-
 } else {
     // Handle error for unsupported request method
     http_response_code(405); // Method Not Allowed

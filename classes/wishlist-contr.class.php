@@ -55,6 +55,17 @@ class WishListContr extends WishList
         return ["success" => true, "wishListData" => $productData["wishListData"]];
     }
 
+    public function removeWishListItem()
+    {
+        $wishListId = parent::getWishListId($this->uid);
+        if (isset($wishListId['error'])) {
+            return ["success" => false, "error" => $wishListId["error"]];
+        }
+
+        parent::deleteItem($wishListId, $this->productId);
+        return ["success" => true, "message" => "Item has been deleted"];
+    }
+
     private function wishListExists()
     {
         $result = null;

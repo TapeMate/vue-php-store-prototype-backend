@@ -105,4 +105,14 @@ class WishList extends Dbh
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return ["wishListData" => $data];
     }
+
+    protected function deleteItem($wishListId, $productId)
+    {
+        $sql = "DELETE FROM wishlist_items WHERE wishlist_id = ? AND products_product_id = ?;";
+        $stmt = parent::connect()->prepare($sql);
+
+        if (!$stmt->execute([$wishListId, $productId])) {
+            return ["error" => "Database deletion failed"];
+        }
+    }
 }
