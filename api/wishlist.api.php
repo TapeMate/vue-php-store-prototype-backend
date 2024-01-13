@@ -1,7 +1,7 @@
 <?php
 // Handle CORS
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: POST, GET, DELETE');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $wishListData = json_decode(file_get_contents('php://input'), true);
-    $uid = $wishListData['userId'];
-    $productId = $wishListData['productId'];
+    $data = json_decode(file_get_contents('php://input'), true);
+    $uid = $data['userId'];
+    $productId = $data['productId'];
 
     $wishListItem = new WishListContr($uid, $productId);
 
@@ -37,8 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode($response);
 
 } else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    // $data = json_decode(file_get_contents("php://input"), true);
+    // $uid = $data["userId"];
+    // $productId = $data["productId"];
+
+    // if ($uid = 30 && $productId == 1) {
+    //     echo json_encode($response);
+    // } else {
+    //     exit();
+    // }
+
     $response = ["success" => true];
     echo json_encode($response);
+
 } else {
     // Handle error for unsupported request method
     http_response_code(405); // Method Not Allowed
