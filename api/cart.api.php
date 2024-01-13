@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product = $data["product"];
     $amount = $data["amount"];
 
-    if ($product->product_id == 1 && $amount == 1) {
+
+    if ($product["product_id"] == 1 && $amount == 1) {
         $response = ["success" => true];
         echo json_encode($response);
     }
