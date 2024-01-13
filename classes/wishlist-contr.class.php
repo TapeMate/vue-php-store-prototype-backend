@@ -20,8 +20,15 @@ class WishListContr extends WishList
         }
 
         $wishListId = parent::getWishListId($this->uid);
-        parent::addWishListItem($wishListId, $this->productId);
-        return ["success" => true, "message" => "Item added to wishlist"];
+
+        if ($this->itemOnWishList($wishListId) == true) {
+            return ["success" => false, "message" => "Item already on wishlist"];
+            // should not happen because should be checked on load on frontend to disable button
+        } else {
+            parent::addWishListItem($wishListId, $this->productId);
+            return ["success" => true, "message" => "Item added to wishlist"];
+        }
+
     }
 
     public function getWishList()
@@ -52,6 +59,17 @@ class WishListContr extends WishList
     {
         $result = null;
         if (!parent::checkWishListExists($this->uid)) {
+            $result = false;
+        } else {
+            $result = true;
+        }
+        return $result;
+    }
+
+    private function itemOnWishList($wishListId)
+    {
+        $result = null;
+        if (!parent::checkItemOnWishList($wishListId, $this->productId)) {
             $result = false;
         } else {
             $result = true;

@@ -43,6 +43,23 @@ class WishList extends Dbh
         return $checkResult;
     }
 
+    protected function checkItemOnWishList($wishListId, $productId)
+    {
+        $sql = "SELECT products_product_id FROM wishlist_items WHERE wishlist_id = ? AND products_product_id = ?;";
+        $stmt = parent::connect()->prepare($sql);
+        $stmt->execute([$wishListId, $productId]);
+
+        $result = null;
+
+        if ($stmt->rowCount() == 0) {
+            $result = false;
+        } else if ($stmt->rowCount() == 1) {
+            $result = true;
+        }
+
+        return $result;
+    }
+
     protected function getWishListId($uid)
     {
         $sql = "SELECT wishlist_id FROM wishlists WHERE users_user_id = (?);";
