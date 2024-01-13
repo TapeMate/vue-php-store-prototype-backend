@@ -36,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $response = $wishListItem->getWishList();
     echo json_encode($response);
 
+} else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    $response = ["success" => true];
+    echo json_encode($response);
 } else {
     // Handle error for unsupported request method
     http_response_code(405); // Method Not Allowed
