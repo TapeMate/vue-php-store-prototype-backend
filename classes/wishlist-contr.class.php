@@ -27,21 +27,20 @@ class WishListContr extends WishList
     public function getWishList()
     {
         if ($this->wishListExists() == false) {
-            return ["error" => "Wishlist does not exist"];
+            return ["success" => false, "error" => "Wishlist does not exist"];
         }
         $wishListId = parent::getWishListId($this->uid);
 
-        // If getWishListId returns an array with 'error', handle it
         if (isset($wishListId['error'])) {
-            return $wishListId;
+            return ["success" => false, "error" => $wishListId["error"]];
         }
 
         $productIds = parent::getWishListItems($wishListId);
         if (isset($productIds['error'])) {
-            return $productIds;
+            return ["success" => false, "error" => $productIds["error"]];
         }
 
-        return $productIds;
+        return ["success" => true, "products_product_id" => $productIds];
     }
 
     private function wishListExists()
