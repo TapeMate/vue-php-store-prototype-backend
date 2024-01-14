@@ -44,7 +44,7 @@ class SignupContr extends Signup
         }
 
         parent::setUser($this->uid, $this->pwd, $this->email);
-        return ["message" => "Signup successful!"];
+        return ["success" => true, "message" => "Signup successful!"];
     }
 
     private function emptyInput()

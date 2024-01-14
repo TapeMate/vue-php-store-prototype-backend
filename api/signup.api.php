@@ -14,10 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $signupData = json_decode(file_get_contents('php://input'), true);
 
-    // Debug: Output $signupData to a log file to see user data
-    // file_put_contents('debug.log', print_r($signupData, true));
-
-    // Now you can use $signupData just like you would use $_POST
     $uid = $signupData['uid'];
     $pwd = $signupData['pwd'];
     $pwdRepeat = $signupData['pwdRepeat'];

@@ -19,7 +19,7 @@ class Login extends Dbh
         }
 
         // Fetch complete user data
-        $sql = "SELECT * FROM users WHERE user_uid = ?;";
+        $sql = "SELECT user_id, user_uid, user_email FROM users WHERE user_uid = ?;";
         $stmt = parent::connect()->prepare($sql);
         $stmt->execute([$uid]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -28,6 +28,6 @@ class Login extends Dbh
             return ["error" => "User not found"];
         }
 
-        return ["user" => $user];
+        return ["success" => true, "user" => $user];
     }
 }
