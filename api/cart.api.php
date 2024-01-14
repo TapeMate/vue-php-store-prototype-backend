@@ -17,12 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
-    $product = $data["product"];
-    $amount = $data["amount"];
+    $uid = $data["userId"];
+    $localCart = $data["localCart"];
 
+    $newCart = new CartContr($uid, $localCart);
 
-    if ($product["product_id"] == 1 && $amount == 1) {
-        $response = ["success" => true];
-        echo json_encode($response);
-    }
+    $response = $newCart->setCart();
+    // $response = ["success" => true];
+    echo json_encode($response);
 }
