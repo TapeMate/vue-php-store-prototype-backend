@@ -2,7 +2,7 @@
 
 // Handle CORS
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: POST, GET');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
@@ -25,4 +25,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = $newCart->setCart();
     // $response = ["success" => true];
     echo json_encode($response);
+} else if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $uid = isset($_GET['userId']) ? $_GET['userId'] : null;
+
+    if ($uid === null) {
+        echo json_encode(["error" => "User ID is required"]);
+        exit();
+    }
+
+    $cart = new CartContr($uid);
+
+    $response = $cart->getCart();
+    echo json_encode($response);
+} else {
+    // Handle error: Not a POST request
+    http_response_code(405); // Method Not Allowed
+    echo json_encode(["error" => "Only POST or GET method is allowed"]);
 }
