@@ -13,9 +13,11 @@ class OrderContr extends Order
 
     public function placeOrder()
     {
-        parent::createOrder($this->uid);
+        $orderId = parent::createOrder($this->uid);
+        parent::insertOrderData($orderId, $this->items);
+        $cartId = parent::selectCart($this->uid);
+        parent::dropCartItems($cartId);
+        parent::dropCart($cartId);
         return ["success" => true, "message" => "Order has been created"];
-        // parent::setOrderItems($orderId, $this->items);
     }
-
 }
