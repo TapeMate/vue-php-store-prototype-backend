@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = $newCart->setCart();
     // $response = ["success" => true];
     echo json_encode($response);
+
 } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $uid = isset($_GET['userId']) ? $_GET['userId'] : null;
 
@@ -33,10 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $cart = new CartContr($uid);
+    $cart = new CartContr($uid, null);
 
     $response = $cart->getCart();
     echo json_encode($response);
+
 } else {
     // Handle error: Not a POST request
     http_response_code(405); // Method Not Allowed

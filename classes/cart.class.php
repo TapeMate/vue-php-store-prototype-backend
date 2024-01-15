@@ -81,6 +81,48 @@ class Cart extends Dbh
         return ["success" => true, "message" => "Cart has been updated"];
     }
 
+    public function getCartItems($cartId)
+    {
+        $sql = "SELECT products_product_id, product_order_amount FROM shoppingcart_items WHERE shoppingcart_id = ?;";
+        $stmt = parent::connect()->prepare($sql);
+        $stmt->execute([$cartId]);
+        $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$cartItems) {
+            error_log("Error in getCartItems: " . join(", ", $stmt->errorInfo()));
+        }
+
+        return $cartItems;
+    }
+
+    public function getCartItemData($cartItems)
+    {
+        $cartData = [];
+        foreach ($cartItems as $item) {
+            $productId = $item["products_product_id"];
+            $orderAmount = $item["product_order_amount"];
+
+            // fetch Product details
+            $productDetails = $this->getProductDetails($productId);
+
+            // add order amount
+            $productDetails['product_order_amount'] = $orderAmount;
+
+            // add to array
+            $cartData[] = $productDetails;
+        }
+
+        return $cartData;
+    }
+
+    private function getProductDetails($productId)
+    {
+        $sql = "SELECT * FROM products WHERE product_id = ?;";
+        $stmt = parent::connect()->prepare($sql);
+        $stmt->execute([$productId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function checkCartExists($uid)
     {
         $sql = "SELECT users_user_id FROM shoppingcarts WHERE users_user_id = ?;";

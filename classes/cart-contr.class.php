@@ -26,6 +26,18 @@ class CartContr extends Cart
         }
     }
 
+    public function getCart()
+    {
+        if ($this->cartExists() == false) {
+            return ["success" => true, "message" => "No cart found"];
+        } else {
+            $cartId = parent::findCart($this->uid);
+            $cartItems = parent::getCartItems($cartId);
+            $cartData = parent::getCartItemData($cartItems);
+            return ["success" => true, "data" => $cartData];
+        }
+    }
+
     public function cartExists()
     {
         $result = null;
