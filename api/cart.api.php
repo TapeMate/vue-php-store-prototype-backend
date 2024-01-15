@@ -16,15 +16,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $uid = $data["userId"];
-    $localCart = $data["localCart"];
+    if ($_SERVER["PATH_INFO"] == "/cart/sync") {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $uid = $data["userId"];
+        $localCart = $data["localCart"];
 
-    $newCart = new CartContr($uid, $localCart);
+        $newCart = new CartContr($uid, $localCart);
 
-    $response = $newCart->setCart();
-    // $response = ["success" => true];
-    echo json_encode($response);
+        $response = $newCart->setCart();
+        // $response = ["success" => true];
+        echo json_encode($response);
+
+    } else if ($_SERVER["PATH_INFO"] == "/cart/update") {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $productId = $data["item"]["product_id"];
+        $newAmount = $data["amount"];
+        $uid = $data["uid"];
+
+        // error_log("Incoming data: " . $data["amount"]);
+
+        $cartUpdate = new CartContr($uid, null);
+
+        $response = $cartUpdate->updateCartItem($productId, $newAmount);
+
+        echo json_encode(["success" => true]);
+    }
+
 
 } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $uid = isset($_GET['userId']) ? $_GET['userId'] : null;

@@ -67,12 +67,12 @@ class Cart extends Dbh
 
             if (array_key_exists($productId, $mappedExistingItems)) {
                 // Update logic
-                $updateSql = "UPDATE shoppingcart_items SET product_order_amount = ? WHERE shoppingcart_id = ? AND products_product_id = ?";
+                $updateSql = "UPDATE shoppingcart_items SET product_order_amount = ? WHERE shoppingcart_id = ? AND products_product_id = ?;";
                 $updateStmt = $pdo->prepare($updateSql);
                 $updateStmt->execute([$orderAmount, $cartId, $productId]);
             } else {
                 // Insert logic
-                $insertSql = "INSERT INTO shoppingcart_items (shoppingcart_id, products_product_id, product_order_amount) VALUES (?, ?, ?)";
+                $insertSql = "INSERT INTO shoppingcart_items (shoppingcart_id, products_product_id, product_order_amount) VALUES (?, ?, ?);";
                 $insertStmt = $pdo->prepare($insertSql);
                 $insertStmt->execute([$cartId, $productId, $orderAmount]);
             }
@@ -93,6 +93,16 @@ class Cart extends Dbh
         }
 
         return $cartItems;
+    }
+
+    public function updateItemOrderAmount($newAmount, $cartId, $productId)
+    {
+        $sql = "UPDATE shoppingcart_items SET product_order_amount = ? WHERE shoppingcart_id = ? AND products_product_id = ?;";
+        $stmt = parent::connect()->prepare($sql);
+        if (!$stmt->execute([$newAmount, $cartId, $productId])) {
+            error_log("" . join("Error on updating cart Item, ", $stmt->errorInfo()));
+        }
+        return ["message" => "update successful"];
     }
 
     public function getCartItemData($cartItems)

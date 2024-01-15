@@ -38,6 +38,13 @@ class CartContr extends Cart
         }
     }
 
+    public function updateCartItem($productId, $newAmount)
+    {
+        $cartId = parent::findCart($this->uid);
+        parent::updateItemOrderAmount($newAmount, $cartId, $productId);
+        return ["success" => true, "message" => "Cart item updated"];
+    }
+
     public function cartExists()
     {
         $result = null;
