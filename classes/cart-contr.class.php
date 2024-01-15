@@ -45,6 +45,13 @@ class CartContr extends Cart
         return ["success" => true, "message" => "Cart item updated"];
     }
 
+    public function deleteCartItem($productId)
+    {
+        $cartId = parent::findCart($this->uid);
+        parent::deleteItemFromCard($cartId, $productId);
+        return ["success" => true, "message" => "Item deleted"];
+    }
+
     public function cartExists()
     {
         $result = null;

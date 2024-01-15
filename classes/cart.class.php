@@ -105,6 +105,16 @@ class Cart extends Dbh
         return ["message" => "update successful"];
     }
 
+    public function deleteItemFromCard($cardId, $productId)
+    {
+        $sql = "DELETE FROM shoppingcart_items WHERE shoppingcart_id = ? AND products_product_id = ?;";
+        $stmt = parent::connect()->prepare($sql);
+        if (!$stmt->execute([$cardId, $productId])) {
+            error_log("" . join("Error on deleting cart Item, ", $stmt->errorInfo()));
+        }
+        return ["message" => "deletion successful"];
+    }
+
     public function getCartItemData($cartItems)
     {
         $cartData = [];

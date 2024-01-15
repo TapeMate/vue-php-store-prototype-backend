@@ -2,7 +2,7 @@
 
 // Handle CORS
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET');
+header('Access-Control-Allow-Methods: POST, GET, DELETE');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
@@ -36,10 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // error_log("Incoming data: " . $data["amount"]);
 
         $cartUpdate = new CartContr($uid, null);
-
-        $response = $cartUpdate->updateCartItem($productId, $newAmount);
+        $cartUpdate->updateCartItem($productId, $newAmount);
 
         echo json_encode(["success" => true]);
+
     }
 
 
@@ -56,6 +56,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = $cart->getCart();
     echo json_encode($response);
 
+} else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $productId = $data["item"]["product_id"];
+    $uid = $data["uid"];
+
+    $cartDelete = new CartContr($uid, null);
+    $cartDelete->deleteCartItem($productId);
+
+    echo json_encode(["success" => true]);
 } else {
     // Handle error: Not a POST request
     http_response_code(405); // Method Not Allowed
