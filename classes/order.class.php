@@ -22,9 +22,6 @@ class Order extends Dbh
         $sql = "INSERT INTO order_items (order_id, products_product_id, product_order_amount) VALUES (?,?,?);";
         $stmt = $pdo->prepare($sql);
 
-        // $itemsString = print_r($items, true);
-        // error_log("Items: " . $itemsString);
-
         foreach ($items as $item) {
             $productId = $item["product_id"];
             $orderAmount = $item["product_order_amount"];

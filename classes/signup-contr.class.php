@@ -17,8 +17,6 @@ class SignupContr extends Signup
     public function signupUser()
     {
         if ($this->emptyInput() == false) {
-            // echo error message to frontend
-            // exit rest of the script
             echo json_encode(["error" => "empty Input, please fill out all fields!"]);
             exit();
         }

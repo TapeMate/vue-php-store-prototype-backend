@@ -23,9 +23,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $order = new OrderContr($uid, $items);
     $order->placeOrder();
 
-    // Log the data
-    // $dataString = json_encode($data);
-    // error_log("Incoming data: " . $dataString);
-
     echo json_encode(["success" => true]);
 }

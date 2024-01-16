@@ -61,7 +61,6 @@ class Cart extends Dbh
         }
 
         foreach ($items as $item) {
-            // error_log("item: " . join(", ", $item["product_id"]));
             $productId = $item['product_id'];
             $orderAmount = $item['product_order_amount'];
 

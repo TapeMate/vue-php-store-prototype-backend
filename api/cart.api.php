@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newCart = new CartContr($uid, $localCart);
 
         $response = $newCart->setCart();
-        // $response = ["success" => true];
         echo json_encode($response);
 
     } else if ($_SERVER["PATH_INFO"] == "/cart/update") {
@@ -33,15 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newAmount = $data["amount"];
         $uid = $data["uid"];
 
-        // error_log("Incoming data: " . $data["amount"]);
-
         $cartUpdate = new CartContr($uid, null);
         $cartUpdate->updateCartItem($productId, $newAmount);
 
         echo json_encode(["success" => true]);
-
     }
-
 
 } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $uid = isset($_GET['userId']) ? $_GET['userId'] : null;
@@ -65,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cartDelete->deleteCartItem($productId);
 
     echo json_encode(["success" => true]);
+
 } else {
-    // Handle error: Not a POST request
     http_response_code(405); // Method Not Allowed
     echo json_encode(["error" => "Only POST or GET method is allowed"]);
 }

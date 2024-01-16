@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $response = $wishListItem->removeWishListItem();
     echo json_encode($response);
+
 } else {
     // Handle error for unsupported request method
     http_response_code(405); // Method Not Allowed
