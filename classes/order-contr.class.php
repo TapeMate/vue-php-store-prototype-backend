@@ -18,6 +18,7 @@ class OrderContr extends Order
         $cartId = parent::selectCart($this->uid);
         parent::dropCartItems($cartId);
         parent::dropCart($cartId);
+        parent::updateItemStockAmount($this->items);
         return ["success" => true, "message" => "Order has been created"];
     }
 }

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if ($_SERVER["PATH_INFO"] == "/cart/sync") {
+    if ($_SERVER["PATH_INFO"] == "/cart/push") {
         $data = json_decode(file_get_contents("php://input"), true);
         $uid = $data["userId"];
         $localCart = $data["localCart"];

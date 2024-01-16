@@ -72,4 +72,37 @@ class Order extends Dbh
 
         return ["success" => true, "message" => "Items deleted"];
     }
+
+    public function updateItemStockAmount($items)
+    {
+        foreach ($items as $item) {
+            $productId = $item["product_id"];
+            $orderAmount = $item["product_order_amount"];
+            $stockAmount = $this->getStockAmount($productId);
+            $newStockAmount = $stockAmount - $orderAmount;
+
+            $sql = "UPDATE products SET product_stock_amount = ? WHERE product_id = ?;";
+            $stmt = parent::connect()->prepare($sql);
+
+            if (!$stmt->execute([$newStockAmount, $productId])) {
+                error_log("" . join(", ", $stmt->errorInfo()));
+            }
+        }
+
+        return ["success" => true, "message" => "Stock amount updated"];
+    }
+
+    private function getStockAmount($productId)
+    {
+        $sql = "SELECT product_stock_amount FROM products WHERE product_id = ?;";
+        $stmt = parent::connect()->prepare($sql);
+        $stmt->execute([$productId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$result) {
+            error_log("" . join(", ", $stmt->errorInfo()));
+        }
+
+        return $result["product_stock_amount"];
+    }
 }
